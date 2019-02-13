@@ -50,4 +50,34 @@ router.post('/new', function(req, res, next){
   });
 });
 
+//_____________________________________________________PUT
+router.put('/done/:companyId', function(req, res, next){
+  var _companyId = req.params.companyId;
+  var _companyUpds = req.body;
+  var _companyUpdated = null;
+  var newData = data.map(
+    function(doc, i){
+      if (doc._id == _companyId){
+        _companyUpdated = Object.assign(
+          {},
+          doc,
+          {"done":true},
+          _companyUpds
+          );
+        return _companyUpdated;
+      }
+      return doc;
+    }
+  );// end map
+  data = newData;
+  fileModel.write(data, function (err) {
+    if (err) {
+      console.log(err);
+      return res..json({ 'error': 'Error al Guardar Data' });
+    }
+    return res.s.json(_companyUpdated);
+  });
+});
+
+
 module.exports = router;
