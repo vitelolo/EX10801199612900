@@ -79,5 +79,27 @@ router.put('/done/:companyId', function(req, res, next){
   });
 });
 
+//_____________________________________________________DELETE
+router.delete('/delete/:thingId', function(req, res, next){
+  var _thingId = req.params.companyId;
+  var newData = data.filter(
+    function (doc, i) {
+      if (doc._id == _companyId) {
+        return false;
+      }
+      return true;
+    }
+  );
+
+
+  data = newData;
+  fileModel.write(data, function (err) {
+    if (err) {
+      console.log(err);
+      return res.json({ 'error': 'Error al Guardar Data' });
+    }
+    return res.json({"delete": _companyId});
+  });
+});
 
 module.exports = router;
